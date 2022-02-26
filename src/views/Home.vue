@@ -6,13 +6,12 @@
         v-model="task"
         placeholder="add task"
     />
-    <button id="add-todo">Add</button>
+    <button id="add-todo" @click="addTodo">Add</button>
     <div id="todo-list">
       <TodoList
           v-for="todo in todoList"
           :key="todo.id"
           :todo="todo"
-
       />
     </div>
   </div>
@@ -30,6 +29,20 @@ export default {
     }
   },
   components: {TodoList},
+  methods: {
+    async addTodo() {
+      if(this.task === "")
+        return
+      try {
+        const newTodo = await API.addTodo(this.task)
+        this.todoList.push(newTodo)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.task = ""
+      }
+    }
+  },
   async created() {
     try {
       this.todoList = await API.getTodoList()
@@ -38,6 +51,5 @@ export default {
       console.error(e)
     }
   }
-
 }
 </script>
