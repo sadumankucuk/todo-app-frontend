@@ -31,9 +31,8 @@ export class API {
     }
 
     async addTodo(newTodo) {
-        return axios.post(this.withPath("api/v1/todos"), {
-            task: newTodo
-        }).then(r => r.data)
+        const data = {task : newTodo.toString()}
+        return axios.post(this.withPath("api/v1/todos"), data).then(r => r.data)
     }
 
     async getTodoList() {

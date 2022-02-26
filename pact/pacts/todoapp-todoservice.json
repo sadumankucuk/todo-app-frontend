@@ -1,0 +1,89 @@
+{
+  "consumer": {
+    "name": "TodoApp"
+  },
+  "provider": {
+    "name": "TodoService"
+  },
+  "interactions": [
+    {
+      "description": "a request to create a new todo",
+      "providerState": "add todo successfully",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/todos",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "task": "buy some milk"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          },
+          "$.body.task": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "id": 1,
+          "task": "buy some milk"
+        },
+        "matchingRules": {
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.task": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request not empty for todo list",
+      "providerState": "get todo list successfully",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/todos"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": [
+          {
+            "id": 1,
+            "task": "buy some milk"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 1
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].id": {
+            "match": "type"
+          },
+          "$.body[*].task": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
