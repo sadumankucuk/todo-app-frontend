@@ -28,7 +28,7 @@ describe("Home.vue", () => {
     })
 
     test("should todoList component exists", () => {
-        const todoList = wrapper.findComponent(TodoList)
+        const todoList = wrapper.find("#todo-list")
         expect(todoList.exists()).toBeTruthy()
     })
 
