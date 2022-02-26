@@ -52,4 +52,27 @@ describe("Home.vue", () => {
         expect(todoListItemComponents).toHaveLength(mockResponse.length)
     })
 
+    test("should add a todo when user enters input and clicks the button", async () => {
+        const newTodo = {id: 1, task: "buy some milk"}
+
+        API.addTodo.mockResolvedValue(newTodo)
+        API.getTodoList.mockResolvedValue([])
+        const wrapper = shallowMount(Home)
+
+        await flushPromises()
+
+        const todoTextBox = wrapper.find('#todo-input')
+        await todoTextBox.setValue(newTodo.task)
+
+        const addButton = wrapper.find("#add-todo")
+        await addButton.trigger('click')
+        await flushPromises()
+
+        expect(wrapper.find('#todo-input').element.value).toBe('')
+
+        const todoListItemComponents = wrapper.findAllComponents(TodoList)
+        expect(todoListItemComponents).toHaveLength(1)
+    })
+
+
 })
