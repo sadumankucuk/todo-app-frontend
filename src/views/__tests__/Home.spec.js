@@ -1,6 +1,11 @@
 import {shallowMount} from "@vue/test-utils";
 import Home from "@/views/Home";
 import TodoList from "@/components/TodoList";
+import flushPromises from "flush-promises";
+import API from "@/api";
+
+jest.mock("@/api")
+
 
 describe("Home.vue", () => {
     let wrapper
@@ -26,4 +31,25 @@ describe("Home.vue", () => {
         const todoList = wrapper.findComponent(TodoList)
         expect(todoList.exists()).toBeTruthy()
     })
+
+    test("should render todo list item components correctly", async () => {
+        const mockResponse = [
+            {
+                id: 1,
+                task: "go to the market"
+            },
+            {
+                id: 2,
+                task: "buy some milk"
+            }
+        ]
+
+        API.getTodoList.mockResolvedValue(mockResponse)
+        const wrapper = shallowMount(Home)
+        await flushPromises()
+
+        const todoListItemComponents = wrapper.findAllComponents(TodoList)
+        expect(todoListItemComponents).toHaveLength(mockResponse.length)
+    })
+
 })
