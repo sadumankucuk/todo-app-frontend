@@ -27,3 +27,12 @@ yarn build
 yarn test:unit
 yarn test:pact
 ```
+
+### How to Run?
+>Docker must be installed and running already
+
+Run on command line `docker-compose up` in the root project folder
+
+Frontend side will work on 8080 port you can access it too
+> sample: localhost: 8080
+
