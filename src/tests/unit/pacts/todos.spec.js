@@ -9,7 +9,7 @@ pactWith({
     describe("todos", () => {
         let api
         beforeEach(() => {
-            api = new API(provider.mockService.baseUrl, false)
+            api = new API(provider.mockService.baseUrl)
         })
 
         test("add todo", async () => {

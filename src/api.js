@@ -4,9 +4,7 @@ import adapter from "axios/lib/adapters/http";
 axios.defaults.adapter = adapter;
 
 export class API {
-    useProxy = false
     constructor(url, useProxy) {
-        this.useProxy = useProxy
 
         if(url === undefined || url === "") {
             url = process.env.VUE_APP_BASE_API_URL;
@@ -20,9 +18,6 @@ export class API {
     }
 
     withPath(path) {
-        if (this.useProxy) {
-            return path
-        }
 
         if(!path.startsWith("/")) {
             path = "/" + path
@@ -40,4 +35,4 @@ export class API {
     }
 }
 
-export default new API(process.env.VUE_APP_BASE_API_URL, true);
+export default new API(process.env.VUE_APP_BASE_API_URL);
