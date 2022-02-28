@@ -63,5 +63,30 @@ pact-publish:
         --broker-base-url=$PACT_BROKER_BASE_URL 
         --broker-token=$PACT_BROKER_TOKEN"
 
+can-i-deploy:
+  stage: can-i-deploy
+  image:
+    name: pactfoundation/pact-cli:latest
+    entrypoint: [""]
+  environment:
+    name: production
+  only:
+    refs:
+      - main
+  script:
+    - "pact broker can-i-deploy 
+      --pacticipant=TodoApp
+      --version=$CI_COMMIT_SHORT_SHA 
+      --to=production 
+      --broker-base-url=$PACT_BROKER_BASE_URL 
+      --broker-token=$PACT_BROKER_TOKEN"
+    - echo "Deploying ${CI_COMMIT_SHORT_SHA} to production!"
+    - "pact broker create-version-tag 
+      --pacticipant=pact-consumer
+      --version=$CI_COMMIT_SHORT_SHA 
+      --tag=production 
+      --broker-base-url=$PACT_BROKER_BASE_URL 
+      --broker-token=$PACT_BROKER_TOKEN"
+
 
 
