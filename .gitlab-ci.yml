@@ -13,6 +13,19 @@ cache:
   paths:
     - node_modules
 
+
+pact-publish:
+  image:
+    name: pactfoundation/pact-cli:latest
+    entrypoint: [""]
+  stage: publish
+  script:
+    - "pact publish pact/pacts
+        --consumer-app-version=$CI_COMMIT_SHORT_SHA
+        --tag=$CI_COMMIT_REF_NAME
+        --broker-base-url=$PACT_BROKER_BASE_URL
+        --broker-token=$PACT_BROKER_TOKEN"
+
 can-i-deploy:
   stage: can-i-deploy
   image:
@@ -24,18 +37,18 @@ can-i-deploy:
     refs:
       - main
   script:
-    - "pact broker can-i-deploy 
-      --pacticipant=TodoApp
-      --version=$CI_COMMIT_SHORT_SHA 
-      --to=production 
-      --broker-base-url=$PACT_BROKER_BASE_URL 
+    - "pact broker can-i-deploy
+      --pacticipant=TodoService
+      --version=$CI_COMMIT_SHORT_SHA
+      --to=production
+      --broker-base-url=$PACT_BROKER_BASE_URL
       --broker-token=$PACT_BROKER_TOKEN"
     - echo "Deploying ${CI_COMMIT_SHORT_SHA} to production!"
-    - "pact broker create-version-tag 
-      --pacticipant=TodoService
-      --version=$CI_COMMIT_SHORT_SHA 
-      --tag=production 
-      --broker-base-url=$PACT_BROKER_BASE_URL 
+    - "pact broker create-version-tag
+      --pacticipant=TodoApp
+      --version=$CI_COMMIT_SHORT_SHA
+      --tag=production
+      --broker-base-url=$PACT_BROKER_BASE_URL
       --broker-token=$PACT_BROKER_TOKEN"
 
 
