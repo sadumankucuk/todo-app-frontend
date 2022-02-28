@@ -1,6 +1,7 @@
 stages:
   - build
-  - test
+  - unit-test
+  - consumer-test
   - publish
   - package
 cache:
@@ -20,12 +21,19 @@ build:
     paths:
       - "dist"
 
-test:
+unit-test:
   image: node:latest
-  stage: test
+  stage: unit-test
   script:
     - yarn install
     - yarn test:unit
+
+consumer-test:
+  image: node:latest
+  stage: consumer-test
+  script:
+    - yarn install
+    - yarn test:pact
 
 pact-publish:
   image:
