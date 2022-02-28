@@ -4,6 +4,7 @@ stages:
   - consumer-test
   - package
   - publish
+  - can-i-deploy
 
 cache:
   key:
