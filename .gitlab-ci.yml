@@ -27,14 +27,14 @@ can-i-deploy:
       - main
   script:
     - "pact broker can-i-deploy
-      --pacticipant=pact-consumer
+      --pacticipant=todoapp
       --version=$CI_COMMIT_SHORT_SHA
       --to=production
       --broker-base-url=$PACT_BROKER_BASE_URL
       --broker-token=$PACT_BROKER_TOKEN"
     - echo "Deploying ${CI_COMMIT_SHORT_SHA} to production!"
     - "pact broker create-version-tag
-      --pacticipant=pact-consumer
+      --pacticipant=todoservice
       --version=$CI_COMMIT_SHORT_SHA
       --tag=production
       --broker-base-url=$PACT_BROKER_BASE_URL
