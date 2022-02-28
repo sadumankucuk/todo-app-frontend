@@ -13,57 +13,6 @@ cache:
   paths:
     - node_modules
 
-build:
-  image: node:lts-alpine
-  stage: build
-  script:
-    - yarn install
-    - yarn build
-  artifacts:
-    paths:
-      - "dist"
-
-unit-test:
-  image: node:latest
-  stage: unit-test
-  script:
-    - yarn install
-    - yarn test:unit
-
-consumer-test:
-  image: node:latest
-  stage: consumer-test
-  script:
-    - yarn install
-    - yarn test:pact
-
-package:
-  stage: package
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-    - >-
-      /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination "${CI_REGISTRY_IMAGE}:latest"
-
-
-pact-publish:
-  image:
-    name: pactfoundation/pact-cli:latest
-    entrypoint: [""]
-  stage: publish
-  script:
-    - "pact publish pact/pacts 
-        --consumer-app-version=$CI_COMMIT_SHORT_SHA 
-        --tag=$CI_COMMIT_REF_NAME 
-        --broker-base-url=$PACT_BROKER_BASE_URL 
-        --broker-token=$PACT_BROKER_TOKEN"
-
 can-i-deploy:
   stage: can-i-deploy
   image:
@@ -76,14 +25,14 @@ can-i-deploy:
       - main
   script:
     - "pact broker can-i-deploy 
-      --pacticipant=TodoApp
+      --pacticipant=TodoService
       --version=$CI_COMMIT_SHORT_SHA 
       --to=production 
       --broker-base-url=$PACT_BROKER_BASE_URL 
       --broker-token=$PACT_BROKER_TOKEN"
     - echo "Deploying ${CI_COMMIT_SHORT_SHA} to production!"
     - "pact broker create-version-tag 
-      --pacticipant=pact-consumer
+      --pacticipant=TodoApp
       --version=$CI_COMMIT_SHORT_SHA 
       --tag=production 
       --broker-base-url=$PACT_BROKER_BASE_URL 
