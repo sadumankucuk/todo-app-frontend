@@ -38,6 +38,9 @@ Run on command line `docker-compose up` in the root project folder
 Frontend side will work on 8080 port you can access it too
 > sample: localhost: 8080
 
+### OR 
+you can reach frontend - https://modanisa-frontend-todo-app.herokuapp.com
+
 ### tests used in the project
 
 ![TestPyramid](./test-pyramid.png)
