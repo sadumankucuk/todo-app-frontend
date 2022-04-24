@@ -1,13 +1,42 @@
 # Vue & Go Simple To-Do List App
 
 # Features
-- Todo item can be added 
-- Todo list can be listed
+- [x] 1- Todo item can be added 
+- [x] 2- Todo list can be listed
 
 ![HomePage](./todo-app.png)
 
-# Used Technologies
-Vue, Vue Test Utils, Pact Jest
+
+## Tech Stack
+
+<ol>
+<li>GoLang (backend)
+    <ol>
+        <li>gin (web framework)</li>
+        <li>testify (test framework)</li>
+        <li>map for in-memory database</li>
+        <li>build tags for go compiler [dev, prod, testenv]</li>
+    </ol>
+</li>
+
+<li> Vue (frontend) 
+    <ol>
+        <li>axios (API calls)</li>
+        <li>unit tests (vue-test-utils)</li>
+        <li>e2e tests (puppeteer cucumber)</li>
+        <li>consumer driven contract test</li>
+    </ol>
+</li>
+
+<li>Nginx (Web server)</li>
+<li>Docker</li>
+<li>Gitlab CI/CD Pipeline(CI)
+</li>
+</ol>
+
+### Tests used in the project
+
+![TestPyramid](./test_pyramid.png)
 
 ## Project setup
 ```
@@ -40,8 +69,4 @@ Frontend side will work on 8080 port you can access it too
 
 ### OR 
 you can reach frontend - https://modanisa-frontend-todo-app.herokuapp.com
-
-### tests used in the project
-
-![TestPyramid](./test-pyramid.png)
 
