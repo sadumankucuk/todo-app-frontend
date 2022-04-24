@@ -10,16 +10,7 @@
 ## Tech Stack
 
 <ol>
-<li>GoLang (backend)
-    <ol>
-        <li>gin (web framework)</li>
-        <li>testify (test framework)</li>
-        <li>map for in-memory database</li>
-        <li>build tags for go compiler [dev, prod, testenv]</li>
-    </ol>
-</li>
-
-<li> Vue (frontend) 
+<li> Vue
     <ol>
         <li>axios (API calls)</li>
         <li>unit tests (vue-test-utils)</li>
@@ -29,7 +20,7 @@
 </li>
 
 <li>Nginx (Web server)</li>
-<li>Docker</li>
+<li>Docker && Docker-Compose</li>
 <li>Gitlab CI/CD Pipeline(CI)
 </li>
 </ol>
