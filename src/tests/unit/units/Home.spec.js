@@ -59,13 +59,12 @@ describe("Home.vue", () => {
         API.getTodoList.mockResolvedValue([])
         const wrapper = shallowMount(Home)
 
-        await flushPromises()
-
         const todoTextBox = wrapper.find('#todo-input')
         await todoTextBox.setValue(newTodo.task)
 
         const addButton = wrapper.find("#add-todo")
         await addButton.trigger('click')
+
         await flushPromises()
 
         expect(wrapper.find('#todo-input').element.value).toBe('')
